@@ -1,6 +1,7 @@
 import sys
 import random
 from PySide6 import QtCore, QtWidgets, QtGui
+from main import Ui_MainWindow
 
 class MyWidget(QtWidgets.QWidget):
     def __init__(self):
@@ -24,8 +25,13 @@ class MyWidget(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
+    # create window
+    window = QtWidgets.QMainWindow()
 
-    widget = MyWidget()
-    widget.resize(800, 600)
-    widget.show()
-    sys.exit(app.exec())
+    ui = Ui_MainWindow()
+    # fill window
+    ui.setupUi(window)
+
+    window.show()
+
+    sys.exit(app.exec_())
