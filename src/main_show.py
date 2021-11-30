@@ -28,11 +28,9 @@ class Ui_MainWindow_Show(Ui_MainWindow):
     def setupUi(self, MainWindow):
         self.main_window = MainWindow
         super().setupUi(MainWindow)
-        self.loginButton.clicked.connect(self.clicked_login)
-        # widget = MyWidget()
-        # self.main_window.setCentralWidget(widget)
+        self.loginButton.clicked.connect(self.login)
 
-    def clicked_login(self):
+    def login(self):
         widget = MyWidget()
         self.main_window.setCentralWidget(widget)
 
