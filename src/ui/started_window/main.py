@@ -16,9 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QFormLayout, QLabel, QMainWindow,
-    QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTextEdit, QWidget)
+from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
+    QTextEdit, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.NonModal)
         MainWindow.setEnabled(True)
-        MainWindow.resize(1366, 768)
+        MainWindow.resize(1367, 768)
         MainWindow.setLocale(QLocale(QLocale.Vietnamese, QLocale.Vietnam))
         self.actionT_c_gi_Tr_ng_Ng_c_Giang = QAction(MainWindow)
         self.actionT_c_gi_Tr_ng_Ng_c_Giang.setObjectName(u"actionT_c_gi_Tr_ng_Ng_c_Giang")
@@ -61,18 +61,16 @@ class Ui_MainWindow(object):
         self.password.viewport().setProperty("cursor", QCursor(Qt.IBeamCursor))
         self.loginButton = QPushButton(self.LoginWidget)
         self.loginButton.setObjectName(u"loginButton")
-        self.loginButton.setGeometry(QRect(20, 160, 75, 24))
+        self.loginButton.setEnabled(True)
+        self.loginButton.setGeometry(QRect(20, 160, 75, 25))
         self.loginButton.setCheckable(True)
-        self.formLayoutWidget = QWidget(self.centralwidget)
-        self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(0, 0, 1361, 721))
-        self.formLayout = QFormLayout(self.formLayoutWidget)
-        self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
+        self.loginButton.setChecked(False)
+        self.loginButton.setAutoDefault(False)
+        self.loginButton.setFlat(False)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1366, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1367, 19))
         self.menuAbout_me = QMenu(self.menubar)
         self.menuAbout_me.setObjectName(u"menuAbout_me")
         MainWindow.setMenuBar(self.menubar)
@@ -85,6 +83,9 @@ class Ui_MainWindow(object):
         self.menuAbout_me.addAction(self.actionemail_truongngocgiang99_gmail_com)
 
         self.retranslateUi(MainWindow)
+
+        self.loginButton.setDefault(False)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi

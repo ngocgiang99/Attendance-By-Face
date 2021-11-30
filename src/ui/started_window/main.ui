@@ -99,12 +99,15 @@
      </property>
     </widget>
     <widget class="QPushButton" name="loginButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>160</y>
        <width>75</width>
-       <height>24</height>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
@@ -112,6 +115,18 @@
      </property>
      <property name="checkable">
       <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>
@@ -122,7 +137,7 @@
      <x>0</x>
      <y>0</y>
      <width>1367</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout_me">
