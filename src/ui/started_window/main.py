@@ -25,7 +25,8 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.NonModal)
-        MainWindow.resize(1366, 768)
+        MainWindow.setEnabled(True)
+        MainWindow.resize(1367, 768)
         MainWindow.setLocale(QLocale(QLocale.Vietnamese, QLocale.Vietnam))
         self.actionT_c_gi_Tr_ng_Ng_c_Giang = QAction(MainWindow)
         self.actionT_c_gi_Tr_ng_Ng_c_Giang.setObjectName(u"actionT_c_gi_Tr_ng_Ng_c_Giang")
@@ -60,11 +61,16 @@ class Ui_MainWindow(object):
         self.password.viewport().setProperty("cursor", QCursor(Qt.IBeamCursor))
         self.loginButton = QPushButton(self.LoginWidget)
         self.loginButton.setObjectName(u"loginButton")
-        self.loginButton.setGeometry(QRect(20, 160, 75, 24))
+        self.loginButton.setEnabled(True)
+        self.loginButton.setGeometry(QRect(20, 160, 75, 25))
+        self.loginButton.setCheckable(True)
+        self.loginButton.setChecked(False)
+        self.loginButton.setAutoDefault(False)
+        self.loginButton.setFlat(False)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1366, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1367, 19))
         self.menuAbout_me = QMenu(self.menubar)
         self.menuAbout_me.setObjectName(u"menuAbout_me")
         MainWindow.setMenuBar(self.menubar)
@@ -77,6 +83,9 @@ class Ui_MainWindow(object):
         self.menuAbout_me.addAction(self.actionemail_truongngocgiang99_gmail_com)
 
         self.retranslateUi(MainWindow)
+
+        self.loginButton.setDefault(False)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
