@@ -15,7 +15,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLayout,
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGridLayout, QHeaderView, QLayout,
     QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QTextBrowser, QWidget)
 
@@ -80,6 +80,7 @@ class Ui_StudentWidget(object):
         self.tableWidget.setItem(0, 0, __qtablewidgetitem4)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setGeometry(QRect(40, 140, 261, 111))
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(160)
 
         self.retranslateUi(StudentWidget)
