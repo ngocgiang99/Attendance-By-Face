@@ -12,9 +12,41 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         self.main_window = MainWindow
         super().setupUi(MainWindow)
         self.loginButton.clicked.connect(self.login)
+        self.main_window.setWindowTitle('Login')
 
     def login(self):
-        widget = QtWidgets.QWidget()
-        student_widget = Ui_StudentWidget_Show()
-        student_widget.setupUi(widget)
+        widget = QtWidgets.QWidget(self.main_window)
+        widget.setLocale(QtCore.QLocale(QtCore.QLocale.Vietnamese, QtCore.QLocale.Vietnam))
+        
+        # database
+        database = None
+
+        # Get user information from database
+        username = self.username.toPlainText()
+        print(username)
+        password = self.password.toPlainText()
+        print(password)
+        
+        if database is not None:
+            user_info = database.get_user_info(username, password)
+        else:
+            user_info = None
+
+        # Check type of user
+        user_type = 0
+
+        # Move to alternative widget with user type 
+        if (user_type == 0):
+            self.student_widget = Ui_StudentWidget_Show(user_info)
+            self.student_widget.setupUi(widget)
+        elif user_type == 1:
+            # Teacher user
+            pass
+        else:
+            # Adminstration user
+            pass
+        self.centralwidget = widget
         self.main_window.setCentralWidget(widget)
+
+
+        
