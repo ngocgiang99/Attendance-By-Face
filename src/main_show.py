@@ -1,6 +1,9 @@
 from ui.started_window.main import Ui_MainWindow
 from PySide6 import QtCore, QtWidgets, QtGui
 import random
+
+from ui.student.student import Ui_StudentWidget
+
 class MyWidget(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -31,6 +34,8 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         self.loginButton.clicked.connect(self.login)
 
     def login(self):
-        widget = MyWidget()
+        widget = QtWidgets.QWidget()
+        student_widget = Ui_StudentWidget()
+        student_widget.setupUi(widget)
         self.main_window.setCentralWidget(widget)
-
+        # super().setupU

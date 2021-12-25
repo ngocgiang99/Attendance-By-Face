@@ -22,4 +22,4 @@ if __name__ == "__main__":
     # window.setCentralWidget(widget)
     
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
