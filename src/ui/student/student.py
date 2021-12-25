@@ -50,6 +50,8 @@ class Ui_StudentWidget(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.update_face_id_button.sizePolicy().hasHeightForWidth())
         self.update_face_id_button.setSizePolicy(sizePolicy1)
+        self.update_face_id_button.setCheckable(True)
+        self.update_face_id_button.setAutoDefault(True)
 
         self.utilities_button.addWidget(self.update_face_id_button, 0, 0, 2, 1)
 
