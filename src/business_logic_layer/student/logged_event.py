@@ -1,3 +1,4 @@
+from ui.student.faceid_updater import Ui_FaceIdUpdater
 from ui.student.student import Ui_StudentWidget
 from PySide6 import QtCore, QtWidgets, QtGui
 import random
@@ -6,7 +7,7 @@ from ui.student.student import Ui_StudentWidget
 
 import cv2
 
-class Ui_StudentWidget_Show(Ui_StudentWidget):
+class Ui_StudentWidget_Logged(Ui_StudentWidget):
     def __init__(self, student_info):
         super(Ui_StudentWidget, self).__init__()
 
@@ -31,20 +32,9 @@ class Ui_StudentWidget_Show(Ui_StudentWidget):
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
 
     def update_face_id(self):
-        print('clicked')
-        cam = cv2.VideoCapture()
-        cam.open('http://192.168.1.93:8000/')
-        while True:
-            ret, frame = cam.read()
-            if frame is None:
-                print('Cannot read info from cam')
-                break
+        updater_widget = QtWidgets.QWidget()
+        self.ui_face_id_updater = Ui_FaceIdUpdater()
 
-            cv2.imshow('test', frame)
-            if cv2.waitKey(10) == 27:
-                break
-        cam.release()
-        pass
 
     def take_attendace(self):
         pass
