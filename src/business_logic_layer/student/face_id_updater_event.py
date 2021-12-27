@@ -28,8 +28,8 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
 
     def setup_cam_viewer(self):
         # widget = QWidget(self.camera_widget)
-        cam_viewer = CameraWidget(self.cam_widget)
-        cam_viewer.show()
+        self.cam_viewer = CameraWidget(self.cam_widget)
+        self.cam_viewer.show()
         # self.cam_widget = cam_viewer
 
         # self.cam_widget.show()
@@ -41,6 +41,7 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         pass
 
     def back_logged_widget(self):
+        self.cam_viewer.close()
         self.logic_controller.show_logged_widget()
         pass
 
