@@ -1,9 +1,9 @@
 from PySide6 import QtGui
-from PySide6.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
+from PySide6.QtWidgets import QSizePolicy, QWidget, QApplication, QLabel, QVBoxLayout
 from PySide6.QtGui import QPixmap
 import sys
 import cv2
-from PySide6.QtCore import Signal, Slot, Qt, QThread
+from PySide6.QtCore import QRect, Signal, Slot, Qt, QThread
 import numpy as np
 
 
@@ -31,23 +31,37 @@ class VideoThread(QThread):
 
 
 class CameraWidget(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Qt live label demo")
-        self.disply_width = 640
-        self.display_height = 480
-        # create the label that holds the image
-        self.image_label = QLabel(self)
-        self.image_label.resize(self.disply_width, self.display_height)
-        # create a text label
-        self.textLabel = QLabel('Webcam')
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        # self.setWindowTitle("Qt live label demo")
+        # self.display_width = 640
+        # self.display_height = 480
+        # # create the label that holds the image
+                # # create a text label
+        # self.textLabel = QLabel('Webcam')
 
-        # create a vertical box layout and add the two labels
-        vbox = QVBoxLayout()
-        vbox.addWidget(self.image_label)
-        vbox.addWidget(self.textLabel)
-        # set the vbox layout as the widgets layout
-        self.setLayout(vbox)
+        # # create a vertical box layout and add the two labels
+        # vbox = QVBoxLayout()
+        # vbox.addWidget(self.image_label)
+        # vbox.addWidget(self.textLabel)
+        # # set the vbox layout as the widgets layout
+        # self.setLayout(vbox)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        self.setObjectName(u"cam_widget")
+        self.setGeometry(parent.geometry())
+        sizePolicy.setHeightForWidth(parent.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        
+        # self.display_width = parent.geometry().width()
+        self.display_width = 640
+        # self.display_height = parent.geometry().height()
+        self.display_height = 480
+
+        self.image_label = QLabel(self)
+        self.image_label.resize(self.display_width, self.display_height)
+
 
         # create the video capture thread
         self.thread = VideoThread()
@@ -74,5 +88,5 @@ class CameraWidget(QWidget):
         h, w, ch = rgb_image.shape
         bytes_per_line = ch * w
         convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-        p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
+        p = convert_to_Qt_format.scaled(self.display_width, self.display_height, Qt.KeepAspectRatio)
         return QPixmap.fromImage(p)

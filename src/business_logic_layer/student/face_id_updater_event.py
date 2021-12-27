@@ -7,12 +7,14 @@ from PySide6.QtCore import Signal, Slot, Qt, QThread
 import numpy as np
 
 from ui.student.faceid_updater import Ui_FaceIdUpdater
-from business_logic_layer.student.face_id_updater_event import CameraWidget
+from business_logic_layer.utilities.camera_widget import CameraWidget
 
 
 class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
-    def __init__(self, student_info):
+    def __init__(self, logic_controller, student_info):
         super(Ui_FaceIdUpdater, self).__init__()
+
+        self.logic_controller = logic_controller
 
         # Object take from database
         self.student_info = student_info
@@ -25,9 +27,22 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         
 
     def setup_cam_viewer(self):
-        cam_viewer = CameraWidget()
-        self.cam_widget = cam_viewer
+        # widget = QWidget(self.camera_widget)
+        cam_viewer = CameraWidget(self.cam_widget)
+        cam_viewer.show()
+        # self.cam_widget = cam_viewer
+
+        # self.cam_widget.show()
 
 
     def setup_button_click(self):
+        self.back_button.clicked.connect(self.back_logged_widget)
+        self.start_capture_image_button.clicked.connect(self.capture_image)
+        pass
+
+    def back_logged_widget(self):
+        self.logic_controller.show_logged_widget()
+        pass
+
+    def capture_image(self):
         pass
