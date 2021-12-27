@@ -2,7 +2,7 @@ from ui.started_window.started_window import Ui_MainWindow
 from PySide6 import QtCore, QtWidgets, QtGui
 import random
 
-from business_logic_layer.student.logged_event import Ui_StudentWidget_Logged
+from business_logic_layer.student.student_logic import StudentLogic
 
 class Ui_MainWindow_Show(Ui_MainWindow):
     def __init__(self):
@@ -15,9 +15,7 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         self.main_window.setWindowTitle('Login')
 
     def login(self):
-        widget = QtWidgets.QWidget(self.main_window)
-        widget.setLocale(QtCore.QLocale(QtCore.QLocale.Vietnamese, QtCore.QLocale.Vietnam))
-        
+                
         # database
         database = None
 
@@ -37,8 +35,8 @@ class Ui_MainWindow_Show(Ui_MainWindow):
 
         # Move to alternative widget with user type 
         if (user_type == 0):
-            self.student_widget = Ui_StudentWidget_Logged(user_info)
-            self.student_widget.setupUi(widget)
+            self.student_widget = StudentLogic(self.main_window, user_info)
+            self.student_widget.show_logged_widget()
             
         elif user_type == 1:
             # Teacher user
@@ -46,8 +44,8 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         else:
             # Adminstration user
             pass
-        self.centralwidget = widget
-        self.main_window.setCentralWidget(widget)
+        # self.centralwidget = widget
+        # self.main_window.setCentralWidget(widget)
 
 
         

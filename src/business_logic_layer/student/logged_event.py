@@ -33,7 +33,7 @@ class Ui_StudentWidget_Logged(Ui_StudentWidget):
 
     def update_face_id(self):
         updater_widget = QtWidgets.QWidget()
-        self.ui_face_id_updater = Ui_FaceIdUpdater()
+        self.ui_face_id_updater = Ui_FaceIdUpdater( )
 
 
     def take_attendace(self):
