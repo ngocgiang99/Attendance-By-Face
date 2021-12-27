@@ -27,12 +27,9 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         
 
     def setup_cam_viewer(self):
-        # widget = QWidget(self.camera_widget)
         self.cam_viewer = CameraWidget(self.cam_widget)
-        self.cam_viewer.show()
-        # self.cam_widget = cam_viewer
+        # self.cam_viewer.show()
 
-        # self.cam_widget.show()
 
 
     def setup_button_click(self):
