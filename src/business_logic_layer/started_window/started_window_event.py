@@ -3,7 +3,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 import random
 
 from business_logic_layer.student.student_logic import StudentLogic
-
+from business_logic_layer.database_connector.mysql_connector import MySQLConnector
 class Ui_MainWindow_Show(Ui_MainWindow):
     def __init__(self):
         super(Ui_MainWindow, self).__init__()
@@ -13,6 +13,12 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         super().setupUi(MainWindow)
         self.loginButton.clicked.connect(self.login)
         self.main_window.setWindowTitle('Login')
+        self.connect_database()
+
+    def connect_database(self):
+        self.database = MySQLConnector()
+        
+
 
     def login(self):
                 
@@ -25,10 +31,14 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         password = self.password.toPlainText()
         print(password)
         
-        if database is not None:
-            user_info = database.get_user_info(username, password)
+        if self.database is not None:
+            user_info = self.database.get_user_info(username, password)
         else:
             user_info = None
+
+        if user_info is None:
+            print("Wrong username or password!")
+            return None
 
         # Check type of user
         user_type = 0
