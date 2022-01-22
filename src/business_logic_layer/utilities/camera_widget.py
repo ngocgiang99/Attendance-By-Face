@@ -3,11 +3,14 @@ from PySide6.QtWidgets import QSizePolicy, QWidget, QApplication, QLabel, QVBoxL
 from PySide6.QtGui import QPixmap
 import sys
 import cv2
-from PySide6.QtCore import QRect, Signal, Slot, Qt, QThread
+from PySide6.QtCore import QRect, Signal, Slot, Qt, QThread, QMutex
 import numpy as np
 
 from ml_services.api.face_detection.face_detection_retina import RetinaFaceSingleton
+import threading
 
+# lock_detected_image = threading.Lock()
+lock_detected_image = QMutex()
 
 class VideoThread(QThread):
     change_pixmap_signal = Signal(np.ndarray)
@@ -64,7 +67,7 @@ class CameraWidget(QWidget):
         self.image_label = QLabel(self)
         self.image_label.resize(self.display_width, self.display_height)
 
-
+        self.thread = None
         self.detected_image = []
         self.view_camera()
 
@@ -73,6 +76,8 @@ class CameraWidget(QWidget):
         event.accept()
 
     def view_camera(self):
+        if self.thread is not None:
+            self.thread.stop()
         # create the video capture thread
         self.thread = VideoThread()
         # connect its signal to the update_image slot
@@ -81,6 +86,7 @@ class CameraWidget(QWidget):
         self.thread.start()
 
     def capture_image(self):
+        self.detected_image = []
         # create the video capture thread
         self.thread = VideoThread()
         # connect its signal to the update_image slot
@@ -88,7 +94,10 @@ class CameraWidget(QWidget):
         # start the thread
         self.thread.start()
 
+        print('thread started')
+
     def capture_face(self, cv_img):
+        print("capture face")
         """Updates the image_label with a new opencv image"""
         model_pack_name = 'buffalo_m'
         root = 'ml_services/data/model'
@@ -100,9 +109,22 @@ class CameraWidget(QWidget):
 
         qt_img = self.convert_cv_qt(rimg)
         self.image_label.setPixmap(qt_img)
-        self.detected_image.append((cv_img, faces, rimg))
+
+        global lock_detected_image
+
+        # lock_detected_image.acquire()
+        lock_detected_image.lock()
+        print('lock 2')
+        if len(self.detected_image) < 30:
+            self.detected_image.append((cv_img, faces, rimg))
+            QThread.sleep(0.1)
+        print(len(self.detected_image))
         if len(self.detected_image) == 30:
             self.view_camera()
+        # lock_detected_image.release()
+        lock_detected_image.unlock()
+        print('release 2')
+        # 
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):
@@ -110,7 +132,7 @@ class CameraWidget(QWidget):
         model_pack_name = 'buffalo_m'
         root = 'ml_services/data/model'
 
-        app = RetinaFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
+        app = RetinaFaceSingleton(root, model_pack_name, providers=['CPUExecutionProvider'])
         app.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
         faces = app.get(cv_img)
         rimg = app.draw_on(cv_img, faces)

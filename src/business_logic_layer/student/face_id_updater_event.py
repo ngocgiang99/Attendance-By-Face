@@ -1,5 +1,6 @@
 from PySide6 import QtGui
 from PySide6.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
+from PySide6.QtCore import QCoreApplication
 from PySide6.QtGui import QPixmap
 import sys
 import cv2
@@ -7,8 +8,7 @@ from PySide6.QtCore import Signal, Slot, Qt, QThread
 import numpy as np
 
 from ui.student.faceid_updater import Ui_FaceIdUpdater
-from business_logic_layer.utilities.camera_widget import CameraWidget
-
+from business_logic_layer.utilities.camera_widget import CameraWidget, lock_detected_image
 
 class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
     def __init__(self, logic_controller, student_info):
@@ -43,4 +43,23 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         pass
 
     def capture_image(self):
+        self.info_line.setText(QCoreApplication.translate("FaceIdUpdater", u"Bắt đầu thu thập ảnh...", None))
         self.cam_viewer.capture_image()
+        
+        QThread.sleep(5)
+        # import time
+        # time.sleep(5)
+        # while True:
+        #     # lock_detected_image.acquire()
+        #     lock_detected_image.lock()
+        #     print('lock 1')
+        #     print("test len ", len(self.cam_viewer.detected_image))
+        #     if len(self.cam_viewer.detected_image) >= 30:
+        #         break
+        #     # lock_detected_image.release()
+        #     lock_detected_image.unlock()
+        #     print('release 1')
+        #     # time.sleep(5)
+        #     QThread.sleep(5)
+
+        self.info_line.setText(QCoreApplication.translate("FaceIdUpdater", u"Hoàn thành thu thập ảnh! Cảm ơn bạn đã sử dụng", None))
