@@ -6,6 +6,8 @@ import cv2
 from PySide6.QtCore import QRect, Signal, Slot, Qt, QThread
 import numpy as np
 
+from ml_services.api.face_detection.face_detection_retina import RetinaFaceSingleton
+
 
 class VideoThread(QThread):
     change_pixmap_signal = Signal(np.ndarray)
@@ -63,6 +65,14 @@ class CameraWidget(QWidget):
         self.image_label.resize(self.display_width, self.display_height)
 
 
+        self.detected_image = []
+        self.view_camera()
+
+    def closeEvent(self, event):
+        self.thread.stop()
+        event.accept()
+
+    def view_camera(self):
         # create the video capture thread
         self.thread = VideoThread()
         # connect its signal to the update_image slot
@@ -70,16 +80,42 @@ class CameraWidget(QWidget):
         # start the thread
         self.thread.start()
 
-    def closeEvent(self, event):
-        self.thread.stop()
-        event.accept()
+    def capture_image(self):
+        # create the video capture thread
+        self.thread = VideoThread()
+        # connect its signal to the update_image slot
+        self.thread.change_pixmap_signal.connect(self.capture_face)
+        # start the thread
+        self.thread.start()
 
+    def capture_face(self, cv_img):
+        """Updates the image_label with a new opencv image"""
+        model_pack_name = 'buffalo_m'
+        root = 'ml_services/data/model'
 
+        app = RetinaFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
+        app.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
+        faces = app.get(cv_img)
+        rimg = app.draw_on(cv_img, faces)
+
+        qt_img = self.convert_cv_qt(rimg)
+        self.image_label.setPixmap(qt_img)
+        self.detected_image.append((cv_img, faces, rimg))
+        if len(self.detected_image) == 30:
+            self.view_camera()
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):
         """Updates the image_label with a new opencv image"""
-        qt_img = self.convert_cv_qt(cv_img)
+        model_pack_name = 'buffalo_m'
+        root = 'ml_services/data/model'
+
+        app = RetinaFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
+        app.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
+        faces = app.get(cv_img)
+        rimg = app.draw_on(cv_img, faces)
+
+        qt_img = self.convert_cv_qt(rimg)
         self.image_label.setPixmap(qt_img)
     
     def convert_cv_qt(self, cv_img):

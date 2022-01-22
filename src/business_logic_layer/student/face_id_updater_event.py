@@ -43,4 +43,4 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         pass
 
     def capture_image(self):
-        pass
+        self.cam_viewer.capture_image()
