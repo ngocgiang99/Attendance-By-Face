@@ -1,7 +1,7 @@
 import sys
 import random
 from PySide6 import QtCore, QtWidgets, QtGui
-from main_show import Ui_MainWindow_Show
+from business_logic_layer.started_window.started_window_event import Ui_MainWindow_Show
 
 
 
