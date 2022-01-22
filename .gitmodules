@@ -1,0 +1,3 @@
+[submodule "src/ml-services"]
+	path = src/ml-services
+	url = https://github.com/ngocgiang99/ML-services.git
