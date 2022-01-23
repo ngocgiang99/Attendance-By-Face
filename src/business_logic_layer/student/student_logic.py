@@ -1,5 +1,6 @@
 from business_logic_layer.student.face_id_updater_event import FaceIdUpdaterWidget
 from business_logic_layer.student.attendance_event import AttendaceWidget
+from business_logic_layer.student.attendance_history_event import StudentHistoryWidget
 from ui.student.faceid_updater import Ui_FaceIdUpdater
 from ui.student.student import Ui_StudentWidget
 from PySide6 import QtCore, QtWidgets, QtGui
@@ -43,3 +44,10 @@ class StudentLogic(object):
         self.ui_attendance.setupUi(widget)
         self.show_widget(widget)
     
+    def show_history_widget(self):
+        widget = QtWidgets.QWidget(self.main_window)
+        widget.setLocale(QtCore.QLocale(QtCore.QLocale.Vietnamese, QtCore.QLocale.Vietnam))
+
+        self.ui_attendance = StudentHistoryWidget(self, self.student_info)
+        self.ui_attendance.setupUi(widget)
+        self.show_widget(widget)

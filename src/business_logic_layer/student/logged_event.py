@@ -56,6 +56,6 @@ class Ui_StudentWidget_Logged(Ui_StudentWidget):
         self.logic_controller.show_attendance_widget()
 
     def view_history_attendace(self):
-        pass
+        self.logic_controller.show_history_widget()
 
         

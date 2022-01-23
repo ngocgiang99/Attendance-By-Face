@@ -35,6 +35,7 @@ class MySQLConnector():
             user['username'] = row[2]
             user['password'] = row[3]
         print(user)
+        cursor.close()
         if user == {}:
             return None
         return user
@@ -55,5 +56,19 @@ class MySQLConnector():
 
         self.db.commit()
         print(cursor.rowcount, "record inserted.")
+        cursor.close()
 
+    def get_histories(self, mssv):
+
+        cursor = self.db.cursor()
+        query = 'select * from Attendance_History where mssv = %s ORDER BY time_attend DESC'
+
+        val = (str(mssv),)
+
+        cursor.execute(query, val)
         
+        res = []
+        for row in cursor:
+            res.append(row)
+        cursor.close()
+        return res
