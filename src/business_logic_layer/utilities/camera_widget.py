@@ -74,6 +74,12 @@ class CameraWidget(QWidget):
         self.view_thread = None
         self.capture_thread = None
         self.detected_image = []
+
+        model_pack_name = 'buffalo_m'
+        root = 'ml_services/data/model'
+        self.face_detector = RetinaFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
+        self.face_detector.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
+
         self.view_camera()
 
     def closeEvent(self, event):
@@ -145,13 +151,10 @@ class CameraWidget(QWidget):
     def capture_face(self, cv_img, num_images):
         """Updates the image_label with a new opencv image"""
         # start = time.time()
-        model_pack_name = 'buffalo_m'
-        root = 'ml_services/data/model'
 
-        app = RetinaFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
-        app.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
-        faces = app.get(cv_img)
-        rimg = app.draw_on(cv_img, faces)
+
+        faces = self.face_detector.get(cv_img)
+        rimg = self.face_detector.draw_on(cv_img, faces)
 
         qt_img = self.convert_cv_qt(rimg)
         self.image_label.setPixmap(qt_img)
@@ -177,10 +180,8 @@ class CameraWidget(QWidget):
         model_pack_name = 'buffalo_m'
         root = 'ml_services/data/model'
 
-        app = RetinaFaceSingleton(root, model_pack_name, providers=['CPUExecutionProvider'])
-        app.prepare(ctx_id=0, det_size=(self.display_height, self.display_width))
-        faces = app.get(cv_img)
-        rimg = app.draw_on(cv_img, faces)
+        faces = self.face_detector.get(cv_img)
+        rimg = self.face_detector.draw_on(cv_img, faces)
 
         qt_img = self.convert_cv_qt(rimg)
         self.image_label.setPixmap(qt_img)

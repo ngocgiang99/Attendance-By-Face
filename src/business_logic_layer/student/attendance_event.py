@@ -27,13 +27,18 @@ class AttendaceWidget(Ui_Attendance):
         super().setupUi(widget)
         self.setup_cam_viewer()
         self.setup_button_click()
+        self.setup_ml_services()
         
 
     def setup_cam_viewer(self):
         self.cam_viewer = CameraWidget(self.cam_widget)
         # self.cam_viewer.show()
 
-
+    def setup_ml_services(self):
+        model_pack_name = 'buffalo_m'
+        root = 'ml_services/data/model'
+        self.recognition = ArcFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
+        self.recognition.prepare(ctx_id=0, det_size=(480, 640))
 
     def setup_button_click(self):
         self.back_button.clicked.connect(self.back_logged_widget)
@@ -46,11 +51,12 @@ class AttendaceWidget(Ui_Attendance):
         pass
 
     def attend_fail(self):
-        
+        self.info_line.setText(QCoreApplication.translate("Attendance", u"Điểm danh thất bại, xin hãy điểm danh lại!", None))
 
         return None
 
     def attend_success(self):
+        self.info_line.setText(QCoreApplication.translate("Attendance", u"Điểm danh thành công!", None))
 
         return None
 
@@ -78,12 +84,9 @@ class AttendaceWidget(Ui_Attendance):
 
         print('number comparable image:', len(db_img))
 
-        model_pack_name = 'buffalo_m'
-        root = 'ml_services/data/model'
-        app = ArcFaceSingleton(root, model_pack_name, providers=[ 'CPUExecutionProvider'])
-        app.prepare(ctx_id=0, det_size=(h, w))
-        faces = app.get(img)
-        rimg = app.draw_on(img, faces)
+
+        faces = self.recognition.get(img)
+        rimg = self.recognition.draw_on(img, faces)
 
         # cv2.imshow("cap image", rimg)
         print(faces[0]['embedding'].shape)
@@ -93,7 +96,7 @@ class AttendaceWidget(Ui_Attendance):
 
         sim = 0
         for t_img in db_img:
-            t_faces = app.get(img)
+            t_faces = self.recognition.get(img)
             t_face = faces[0]
 
             cos_sim = cosine_similarity(face['embedding'], t_face['embedding'])
