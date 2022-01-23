@@ -11,6 +11,7 @@ import threading
 
 # lock_detected_image = threading.Lock()
 lock_detected_image = QMutex()
+import time
 
 class VideoThread(QThread):
     change_pixmap_signal = Signal(np.ndarray)
@@ -95,6 +96,7 @@ class CameraWidget(QWidget):
     def capture_image(self, num_images = 30):
         if self.view_thread is not None:
             self.view_thread.stop()
+            self.view_thread.wait()
         # self.detected_image = []
         # # create the video capture thread
         # self.capture_thread = VideoThread()
@@ -104,27 +106,42 @@ class CameraWidget(QWidget):
         # self.capture_thread.start()
         # print('thread started')
         # self.thread.wait()
-        # print("finished thread")
+
 
         self.detected_image = []
         cap = cv2.VideoCapture(0)
+        cnt = 0 
+        for i in range(100):
+            print('frame ', i)
+            ret, cv_img = cap.read()
+            if ret:
+                cnt += 1
+                if cnt > 10:
+                    break
+
+        start = time.time()
         while True:
             ret, cv_img = cap.read()
             if ret:
                 # lock_detected_image.lock()
                 self.capture_face(cv_img, num_images)
+                print(len(self.detected_image))
                 if len(self.detected_image) == num_images:
                     break
                 # lock_detected_image.unlock()
+            end = time.time()
+            print("frame: ", end - start)
 
         # shut down capture system
         cap.release()
+        QThread.sleep(3)
         self.view_camera()
 
 
 
     def capture_face(self, cv_img, num_images):
         """Updates the image_label with a new opencv image"""
+        # start = time.time()
         model_pack_name = 'buffalo_m'
         root = 'ml_services/data/model'
 
@@ -143,11 +160,13 @@ class CameraWidget(QWidget):
         # with lock_detected_image:
         if len(self.detected_image) < num_images and len(faces) > 0:
             self.detected_image.append((cv_img, faces, rimg))
-            QThread.sleep(0.1)
+            # QThread.sleep(0.1)
         # if len(self.detected_image) == 30:
         #     self.view_camera()
         # lock_detected_image.release()
         # lock_detected_image.unlock()
+        # end = time.time()
+        # print('capture time: ', end-start)
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):
