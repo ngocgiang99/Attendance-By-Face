@@ -95,7 +95,6 @@ class CameraWidget(QWidget):
     def capture_image(self):
         if self.view_thread is not None:
             self.view_thread.stop()
-            print('view thread stopped')
         # self.detected_image = []
         # # create the video capture thread
         # self.capture_thread = VideoThread()
@@ -124,7 +123,6 @@ class CameraWidget(QWidget):
 
 
     def capture_face(self, cv_img):
-        print("capture face")
         """Updates the image_label with a new opencv image"""
         model_pack_name = 'buffalo_m'
         root = 'ml_services/data/model'
@@ -142,16 +140,13 @@ class CameraWidget(QWidget):
         # lock_detected_image.acquire()
         # lock_detected_image.lock()
         # with lock_detected_image:
-        print('lock 2')
         if len(self.detected_image) < 30 and len(faces) > 0:
             self.detected_image.append((cv_img, faces, rimg))
             QThread.sleep(0.1)
-        print(len(self.detected_image))
         # if len(self.detected_image) == 30:
         #     self.view_camera()
         # lock_detected_image.release()
         # lock_detected_image.unlock()
-        print('release 2')
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):
