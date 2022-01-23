@@ -112,9 +112,10 @@ class CameraWidget(QWidget):
         cap = cv2.VideoCapture(0)
         cnt = 0 
         for i in range(100):
-            print('frame ', i)
             ret, cv_img = cap.read()
             if ret:
+                self.capture_face(cv_img, 0)
+                print('frame ', i)
                 cnt += 1
                 if cnt > 10:
                     break
@@ -131,6 +132,8 @@ class CameraWidget(QWidget):
                 # lock_detected_image.unlock()
             end = time.time()
             print("frame: ", end - start)
+            if end-start > 10:
+                break
 
         # shut down capture system
         cap.release()
