@@ -49,7 +49,7 @@
     <cursorShape>ArrowCursor</cursorShape>
    </property>
    <property name="text">
-    <string>Khi bạn sẵn sàng hãy ấn vào nút bắt đầu để thu thập ảnh</string>
+    <string>Khi bạn sẵn sàng hãy ấn vào nút bắt đầu để điểm danh</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
