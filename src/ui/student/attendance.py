@@ -60,7 +60,7 @@ class Ui_Attendance(object):
     def retranslateUi(self, Attendance):
         Attendance.setWindowTitle(QCoreApplication.translate("Attendance", u"Form", None))
         self.back_button.setText(QCoreApplication.translate("Attendance", u"Tr\u1edf l\u1ea1i", None))
-        self.info_line.setText(QCoreApplication.translate("Attendance", u"Khi b\u1ea1n s\u1eb5n s\u00e0ng h\u00e3y \u1ea5n v\u00e0o n\u00fat b\u1eaft \u0111\u1ea7u \u0111\u1ec3 thu th\u1eadp \u1ea3nh", None))
+        self.info_line.setText(QCoreApplication.translate("Attendance", u"Khi b\u1ea1n s\u1eb5n s\u00e0ng h\u00e3y \u1ea5n v\u00e0o n\u00fat b\u1eaft \u0111\u1ea7u \u0111\u1ec3 \u0111i\u1ec3m danh", None))
         self.attend_button.setText(QCoreApplication.translate("Attendance", u"\u0110i\u1ec3m danh", None))
     # retranslateUi
 
