@@ -13,6 +13,7 @@ from business_logic_layer.utilities.camera_widget import CameraWidget, lock_dete
 from ml_services.api.face_recognition.face_recognition_arcface import ArcFaceSingleton
 
 from business_logic_layer.utilities.similarity_function import cosine_similarity, COSINE_THRESHOLD
+from business_logic_layer.database_connector.mysql_connector import MySQLConnector
 class AttendaceWidget(Ui_Attendance):
     def __init__(self, logic_controller, student_info):
         super(Ui_Attendance, self).__init__()
@@ -28,11 +29,15 @@ class AttendaceWidget(Ui_Attendance):
         self.setup_cam_viewer()
         self.setup_button_click()
         self.setup_ml_services()
+        self.connect_database()
         
 
     def setup_cam_viewer(self):
         self.cam_viewer = CameraWidget(self.cam_widget)
         # self.cam_viewer.show()
+
+    def connect_database(self):
+        self.database = MySQLConnector()
 
     def setup_ml_services(self):
         model_pack_name = 'buffalo_m'
@@ -57,7 +62,8 @@ class AttendaceWidget(Ui_Attendance):
 
     def attend_success(self):
         self.info_line.setText(QCoreApplication.translate("Attendance", u"Điểm danh thành công!", None))
-
+        mssv = self.student_info.get('mssv', 0)
+        self.database.insert_attendance(mssv)
         return None
 
     def attend(self):

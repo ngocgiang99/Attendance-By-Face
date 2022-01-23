@@ -123,7 +123,7 @@ class CameraWidget(QWidget):
                 self.capture_face(cv_img, 0)
                 print('frame ', i)
                 cnt += 1
-                if cnt > 10:
+                if cnt > 3:
                     break
 
         start = time.time()

@@ -1,6 +1,6 @@
 
 import mysql.connector
-
+import datetime
 
 class MySQLConnector():
 
@@ -38,3 +38,22 @@ class MySQLConnector():
         if user == {}:
             return None
         return user
+
+    def insert_attendance(self, mssv):
+        cursor = self.db.cursor()
+
+        # '2011-12-18 13:17:17'
+        now = datetime.datetime.now()
+        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        print(date_time)
+        print(type(date_time))
+
+        query = """insert into Attendance_History values (%s, %s, %s);"""
+        print(query)
+        val = (None, str(mssv), date_time)
+        cursor.execute(query, val)
+
+        self.db.commit()
+        print(cursor.rowcount, "record inserted.")
+
+        
