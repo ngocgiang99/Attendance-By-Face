@@ -25,7 +25,10 @@ class VideoThread(QThread):
         while self._run_flag:
             ret, cv_img = cap.read()
             if ret:
+                # lock_detected_image.lock()
                 self.change_pixmap_signal.emit(cv_img)
+                # lock_detected_image.unlock()
+
         # shut down capture system
         cap.release()
 
@@ -67,34 +70,58 @@ class CameraWidget(QWidget):
         self.image_label = QLabel(self)
         self.image_label.resize(self.display_width, self.display_height)
 
-        self.thread = None
+        self.view_thread = None
+        self.capture_thread = None
         self.detected_image = []
         self.view_camera()
 
     def closeEvent(self, event):
-        self.thread.stop()
+        if self.capture_thread is not None:
+            self.capture_thread.stop()
+        if self.view_thread is not None:
+            self.view_thread.stop()
         event.accept()
 
     def view_camera(self):
-        if self.thread is not None:
-            self.thread.stop()
+        if self.capture_thread is not None:
+            self.capture_thread.stop()
         # create the video capture thread
-        self.thread = VideoThread()
+        self.view_thread = VideoThread()
         # connect its signal to the update_image slot
-        self.thread.change_pixmap_signal.connect(self.update_image)
+        self.view_thread.change_pixmap_signal.connect(self.update_image)
         # start the thread
-        self.thread.start()
+        self.view_thread.start()
 
     def capture_image(self):
-        self.detected_image = []
-        # create the video capture thread
-        self.thread = VideoThread()
-        # connect its signal to the update_image slot
-        self.thread.change_pixmap_signal.connect(self.capture_face)
-        # start the thread
-        self.thread.start()
+        if self.view_thread is not None:
+            self.view_thread.stop()
+            print('view thread stopped')
+        # self.detected_image = []
+        # # create the video capture thread
+        # self.capture_thread = VideoThread()
+        # # connect its signal to the update_image slot
+        # self.capture_thread.change_pixmap_signal.connect(self.capture_face)
+        # # start the thread
+        # self.capture_thread.start()
+        # print('thread started')
+        # self.thread.wait()
+        # print("finished thread")
 
-        print('thread started')
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, cv_img = cap.read()
+            if ret:
+                # lock_detected_image.lock()
+                self.capture_face(cv_img)
+                if len(self.detected_image) == 30:
+                    break
+                # lock_detected_image.unlock()
+
+        # shut down capture system
+        cap.release()
+        self.view_camera()
+
+
 
     def capture_face(self, cv_img):
         print("capture face")
@@ -113,18 +140,18 @@ class CameraWidget(QWidget):
         global lock_detected_image
 
         # lock_detected_image.acquire()
-        lock_detected_image.lock()
+        # lock_detected_image.lock()
+        # with lock_detected_image:
         print('lock 2')
-        if len(self.detected_image) < 30:
+        if len(self.detected_image) < 30 and len(faces) > 0:
             self.detected_image.append((cv_img, faces, rimg))
             QThread.sleep(0.1)
         print(len(self.detected_image))
-        if len(self.detected_image) == 30:
-            self.view_camera()
+        # if len(self.detected_image) == 30:
+        #     self.view_camera()
         # lock_detected_image.release()
-        lock_detected_image.unlock()
+        # lock_detected_image.unlock()
         print('release 2')
-        # 
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):

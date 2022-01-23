@@ -46,20 +46,42 @@ class FaceIdUpdaterWidget(Ui_FaceIdUpdater):
         self.info_line.setText(QCoreApplication.translate("FaceIdUpdater", u"Bắt đầu thu thập ảnh...", None))
         self.cam_viewer.capture_image()
         
-        QThread.sleep(5)
-        # import time
-        # time.sleep(5)
+        QThread.sleep(2)
+        
         # while True:
-        #     # lock_detected_image.acquire()
+        #     # with lock_detected_image:
         #     lock_detected_image.lock()
-        #     print('lock 1')
-        #     print("test len ", len(self.cam_viewer.detected_image))
+        #         # print("accquire lock")
         #     if len(self.cam_viewer.detected_image) >= 30:
         #         break
-        #     # lock_detected_image.release()
         #     lock_detected_image.unlock()
-        #     print('release 1')
-        #     # time.sleep(5)
-        #     QThread.sleep(5)
-
+        
+        print("capture complete")
         self.info_line.setText(QCoreApplication.translate("FaceIdUpdater", u"Hoàn thành thu thập ảnh! Cảm ơn bạn đã sử dụng", None))
+        import os
+        mssv = self.student_info['mssv']
+        mssv = str(mssv)
+        saved_dir = os.path.join('data','face', mssv)
+        if not os.path.exists(saved_dir):
+            os.makedirs(saved_dir, exist_ok = True)
+        
+        for i, (cv_img, faces, rimg) in enumerate(self.cam_viewer.detected_image):
+            # box = faces[0].bbox.astype(np.int)
+            # x1,y1 = box[0]
+            # x2,y2 = box[1]
+            # x3,y3 = box[2]
+            # x4,y4 = box[3]
+
+
+            # top_left_x = min([x1,x2,x3,x4])
+            # top_left_y = min([y1,y2,y3,y4])
+            # bot_right_x = max([x1,x2,x3,x4])
+            # bot_right_y = max([y1,y2,y3,y4])
+
+            # cropped_image = cv_img[top_left_y:bot_right_y+1, top_left_x:bot_right_x+1]
+
+            cropped_image = cv_img
+
+            img_path = os.path.join(saved_dir, str(i) + ".png")
+            cv2.imwrite(img_path, cropped_image)
+
