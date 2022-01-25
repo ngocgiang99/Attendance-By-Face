@@ -36,6 +36,10 @@ class VideoThread(QThread):
         self._run_flag = False
         self.wait()
 
+# class ImagePreview(Widget):
+
+
+
 class MLCamThread(QThread):
     get_recognition_signal = Signal(np.ndarray)
     change_pixmap_signal = Signal(np.ndarray)
@@ -58,6 +62,7 @@ class MLCamThread(QThread):
                 if self._run_ml:
                     ori_img, faces, cv_img = self._do_ml_services(cv_img)
                     if self._preview_face:
+                        self._do_preview_face(ori_img, faces)
                         pass
 
                     if self._show_table_info:
@@ -137,11 +142,49 @@ class RecognitionWidget(QWidget):
         self.view_thread.set_run_ml(self._start_attendance, self.recognize)
 
     def setup_preview_face(self, preview_layout):
+        print('setup here')
         self._preview_face = True
+        self.view_thread.set_preview_face(self._preview_face, self.show_preview_face)
+        self.preview_layout = preview_layout
+        self._list_pic_preview_layout = [None] * 5
+
+        for i in range(5):
+            self._list_pic_preview_layout[i] = QLabel(QWidget())
+            self.preview_layout.addWidget(self._list_pic_preview_layout[i])
+            print("append pic", i, self._list_pic_preview_layout[i])
     
     def setup_show_table_info(self, table_widget):
         self._show_table_info = True
 
+
+    @Slot(np.ndarray, list)   
+    def show_preview_face(self, cv_img, faces):
+        if len(faces) > 0:
+            print(faces[0].keys())
+        if len(faces) > 5:
+            faces.sort(descending=True, key=lambda x: x['det_score'])
+            faces = faces[:5]
+
+        for i, face in enumerate(faces):
+            box = face.bbox.astype(np.int)
+            print(box)
+            x = max(box[0], 0)
+            y = max(box[1], 0)
+            w = box[2] - x
+            h = box[3] - y
+
+            cropped_img = cv_img[y:y+h, x:x+w]
+            print(type(cropped_img))
+            
+            print("pic ", i)
+            pic = self._list_pic_preview_layout[i]
+            pixmap = self.convert_cv_qt(cropped_img)
+            pic.setPixmap(pixmap)
+
+            
+
+
+        pass
 
     @Slot(np.ndarray)   
     def recognize(self, cv_img):
