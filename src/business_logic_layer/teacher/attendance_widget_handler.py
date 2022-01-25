@@ -45,6 +45,7 @@ class AttendanceWidget(Ui_Attendance):
         pass
 
     def attend(self):
+        print("attend")
         self.view_thread.setup_run_ml_services()
         self.view_thread.setup_preview_face(self.face_preview)
         self.view_thread.setup_show_table_info(self.attendance_table)

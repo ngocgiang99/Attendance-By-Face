@@ -36,6 +36,55 @@ class VideoThread(QThread):
         self._run_flag = False
         self.wait()
 
+class MLCamThread(QThread):
+    get_recognition_signal = Signal(np.ndarray)
+    change_pixmap_signal = Signal(np.ndarray)
+    update_preview_face_signal = Signal()
+    update_attendance_table_info = Signal()
+
+    def __init__(self):
+        super().__init__()
+        self._run_flag = True
+        self._run_ml = False
+        self._preview_face = False
+        self._show_table_info = False
+
+    def run(self):
+        # capture from web cam
+        cap = cv2.VideoCapture(0)
+        while self._run_flag:
+            ret, cv_img = cap.read()
+            if ret:
+                if self._run_ml:
+                    ori_img, faces, cv_img = self._do_ml_services(cv_img)
+                    if self._preview_face:
+                        pass
+
+                    if self._show_table_info:
+                        pass
+
+                self.change_pixmap_signal.emit(cv_img)
+
+        # shut down capture system
+        cap.release()
+
+    def set_run_ml(self, run_ml, ml_func=None):
+        self._run_ml = run_ml
+        self._do_ml_services = ml_func
+
+    def set_preview_face(self, preview_face, preview_face_func=None):
+        self._preview_face = preview_face
+        self._do_preview_face = preview_face_func
+
+    def setup_show_table_info(self, show_table_info, show_table_info_func=None):
+        self._show_table_info = show_table_info
+        self._do_show_table_info = show_table_info_func
+
+    def stop(self):
+        """Sets run flag to False and waits for thread to finish"""
+        self._run_flag = False
+        self.wait()
+
 
 class RecognitionWidget(QWidget):
     def __init__(self, parent, *args, **kwargs):
@@ -76,7 +125,7 @@ class RecognitionWidget(QWidget):
         if self.capture_thread is not None:
             self.capture_thread.stop()
         # create the video capture thread
-        self.view_thread = VideoThread()
+        self.view_thread = MLCamThread()
         # connect its signal to the update_image slot
         self.view_thread.change_pixmap_signal.connect(self.update_image)
         # start the thread
@@ -84,6 +133,8 @@ class RecognitionWidget(QWidget):
 
     def setup_run_ml_services(self):
         self._start_attendance = True
+        # self.view_thread.get_recognition_signal.connect(self.recognize)
+        self.view_thread.set_run_ml(self._start_attendance, self.recognize)
 
     def setup_preview_face(self, preview_layout):
         self._preview_face = True
@@ -91,6 +142,13 @@ class RecognitionWidget(QWidget):
     def setup_show_table_info(self, table_widget):
         self._show_table_info = True
 
+
+    @Slot(np.ndarray)   
+    def recognize(self, cv_img):
+        """Updates the image_label with a new opencv image"""
+        faces = self.face_detector.get(cv_img)
+        rimg = self.face_detector.draw_on(cv_img, faces)
+        return cv_img, faces, rimg
 
     @Slot(np.ndarray)
     def update_image(self, cv_img):
