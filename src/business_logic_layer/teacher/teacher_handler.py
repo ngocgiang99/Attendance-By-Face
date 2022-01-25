@@ -3,6 +3,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 import random
 
 from business_logic_layer.teacher.logged_handler import Ui_TeacherWidget_Logged
+from business_logic_layer.teacher.attendance_widget_handler import AttendanceWidget
 import cv2
 
 
@@ -31,13 +32,13 @@ class TeacherHandler(object):
     #     self.ui_face_id_updater.setupUi(widget)
     #     self.show_widget(widget)
 
-    # def show_attendance_widget(self):
-    #     widget = QtWidgets.QWidget(self.main_window)
-    #     widget.setLocale(QtCore.QLocale(QtCore.QLocale.Vietnamese, QtCore.QLocale.Vietnam))
+    def show_attendance_widget(self):
+        widget = QtWidgets.QWidget(self.main_window)
+        widget.setLocale(QtCore.QLocale(QtCore.QLocale.Vietnamese, QtCore.QLocale.Vietnam))
 
-    #     self.ui_attendance = AttendaceWidget(self, self.teacher_info)
-    #     self.ui_attendance.setupUi(widget)
-    #     self.show_widget(widget)
+        self.ui_attendance = AttendanceWidget(self, self.teacher_info)
+        self.ui_attendance.setupUi(widget)
+        self.show_widget(widget)
     
     # def show_history_widget(self):
     #     widget = QtWidgets.QWidget(self.main_window)
