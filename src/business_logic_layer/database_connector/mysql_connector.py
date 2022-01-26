@@ -2,7 +2,9 @@
 import mysql.connector
 import datetime
 
-class MySQLConnector():
+from business_logic_layer.utilities.singleton_meta import SingletonMeta
+
+class MySQLConnector(metaclass=SingletonMeta):
 
     def __init__(self):
         self.db = mysql.connector.connect(
@@ -72,3 +74,44 @@ class MySQLConnector():
             res.append(row)
         cursor.close()
         return res
+
+
+    def get_student_info(self, mssv):
+        cursor = self.db.cursor()
+        query = 'select * from Student where MSSV = %s'
+
+        val = (str(mssv), )
+        cursor.execute(query, val)       
+        user = {}
+        for row in cursor:
+            print(row)
+            user['mssv'] = row[0]
+            user['name'] = row[1]
+            user['email'] = row[2]
+            user['password'] = row[3]
+        print(user)
+        cursor.close()
+        if user == {}:
+            return None
+        return user
+
+    def get_history(self, mssv, time):
+        cursor = self.db.cursor()
+        query = 'select * from Attendance_History where (MSSV = %s) and (time_attend >= %s);'
+
+        time = time.strftime("%Y-%m-%d %H:%M:%S")
+        val = (str(mssv), time)
+        cursor.execute(query, val)       
+        user = {}
+        for row in cursor:
+            print(row)
+            user['id'] = row[0]
+            user['mssv'] = row[1]
+            user['time_attend'] = row[2].strftime("%Y-%m-%d %H:%M:%S")
+        
+        print(time)
+        print(user)
+        cursor.close()
+        if user == {}:
+            return None
+        return user
