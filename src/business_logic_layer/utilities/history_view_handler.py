@@ -41,6 +41,7 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
 
     def view_calendar_widget(self):
         self.calendar.show()
+        self.calendar.raise_()
 
     @QtCore.Slot(QtCore.QDate)
     def get_date(self, date): # <--- date parameter
@@ -53,6 +54,8 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
     def show_selected_date(self, date):
         date = self.get_date(date)
         date = date.strftime("%d-%m-%Y")
+        if self.date_picker.count() == 0:
+            self.date_picker.addItem("")
         self.date_picker.setItemText(0, QCoreApplication.translate("Attendace_History", date, None))
 
         pass
