@@ -173,7 +173,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="export_res_button">
     <property name="geometry">
      <rect>
       <x>900</x>
@@ -192,7 +192,7 @@
    <zorder>date_picker_label</zorder>
    <zorder>search_button</zorder>
    <zorder>tableWidget</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>export_res_button</zorder>
   </widget>
  </widget>
  <resources/>

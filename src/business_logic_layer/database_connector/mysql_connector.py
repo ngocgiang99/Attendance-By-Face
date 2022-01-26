@@ -115,3 +115,28 @@ class MySQLConnector(metaclass=SingletonMeta):
         if user == {}:
             return None
         return user
+
+    
+    def get_his_between_time(self, start_time, end_time):
+        cursor = self.db.cursor()
+        query = """
+        select * from Attendance_History 
+        where 
+            (time_attend >= %s) 
+            and (time_attend < %s)
+        ORDER BY time_attend DESC
+        
+        """
+
+        start_time = start_time.strftime("%Y-%m-%d %H:%M:%S")
+        end_time = end_time.strftime("%Y-%m-%d %H:%M:%S")
+        val = (start_time, end_time)
+
+        cursor.execute(query, val)
+        
+        res = []
+        for row in cursor:
+            res.append(row)
+        cursor.close()
+        return res
+

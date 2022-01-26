@@ -2,12 +2,13 @@ from PySide6 import QtCore, QtWidgets, QtGui
 import random
 
 from ui.utilities.history_view import Ui_Attendace_History
-from PySide6.QtWidgets import QCalendarWidget
+from business_logic_layer.database_connector.mysql_connector import MySQLConnector
+from PySide6.QtWidgets import QCalendarWidget, QTableWidgetItem
 from PySide6.QtCore import QCoreApplication, QRect
 
 
 import cv2
-from datetime import datetime
+import datetime
 
 class AttendaceHistoryViewWidget(Ui_Attendace_History):
     def __init__(self, logic_controller, user_info):
@@ -28,6 +29,8 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
     def setup_button_click(self):
         self.back_button.clicked.connect(self.back_logged_widget)
         self.view_calendar.clicked.connect(self.view_calendar_widget)
+        self.search_button.clicked.connect(self.view_history)
+        self.export_res_button.clicked.connect(self.export_res)
         pass
 
     def back_logged_widget(self):
@@ -47,7 +50,7 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
     def get_date(self, date): # <--- date parameter
         self.calendar.hide()
         date = date.toString("dd-MM-yyyy")
-        self.calendar_date = datetime.strptime(date, "%d-%m-%Y")
+        self.calendar_date = datetime.datetime.strptime(date, "%d-%m-%Y")
         return self.calendar_date
         
     @QtCore.Slot(QtCore.QDate)
@@ -58,6 +61,40 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
             self.date_picker.addItem("")
         self.date_picker.setItemText(0, QCoreApplication.translate("Attendace_History", date, None))
 
+        pass
+
+    def view_history(self):
+        connector = MySQLConnector()
+        date_start = self.calendar_date
+        date_end = date_start + datetime.timedelta(days=1)
+        print(date_start)
+        print(date_end)
+
+        histories = connector.get_his_between_time(date_start, date_end)
+        print(histories)
+
+        for his in histories:
+            # time = his[2].strftime("%Y-%m-%d %H:%M:%S")
+            time = his[2].strftime("%H:%M:%S %d-%m-%Y-%m")
+            mssv = int(his[1])
+            student_info = connector.get_student_info(mssv)
+
+            student_name = student_info['name']
+            student_email = student_info['email']
+            time_attend = time
+            mssv = str(mssv)
+
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            self.tableWidget.setItem(rowPosition , 0, QTableWidgetItem(mssv))
+            self.tableWidget.setItem(rowPosition , 1, QTableWidgetItem(student_name))
+            self.tableWidget.setItem(rowPosition , 2, QTableWidgetItem(student_email))
+            self.tableWidget.setItem(rowPosition , 3, QTableWidgetItem(time_attend))
+            
+
+        pass
+
+    def export_res(self):
         pass
 
         

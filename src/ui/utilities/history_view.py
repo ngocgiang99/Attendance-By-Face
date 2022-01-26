@@ -81,16 +81,16 @@ class Ui_Attendace_History(object):
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setGeometry(QRect(20, 290, 1011, 301))
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
-        self.pushButton = QPushButton(self.viewer_widget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(900, 170, 128, 64))
+        self.export_res_button = QPushButton(self.viewer_widget)
+        self.export_res_button.setObjectName(u"export_res_button")
+        self.export_res_button.setGeometry(QRect(900, 170, 128, 64))
         self.date_picker.raise_()
         self.view_calendar.raise_()
         self.calendar.raise_()
         self.date_picker_label.raise_()
         self.search_button.raise_()
         self.tableWidget.raise_()
-        self.pushButton.raise_()
+        self.export_res_button.raise_()
 
         self.retranslateUi(Attendace_History)
 
@@ -112,6 +112,6 @@ class Ui_Attendace_History(object):
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Attendace_History", u"Email", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Attendace_History", u"Th\u1eddi gian \u0111i\u1ec3m danh", None));
-        self.pushButton.setText(QCoreApplication.translate("Attendace_History", u"Xu\u1ea5t b\u00e1o c\u00e1o", None))
+        self.export_res_button.setText(QCoreApplication.translate("Attendace_History", u"Xu\u1ea5t b\u00e1o c\u00e1o", None))
     # retranslateUi
 
