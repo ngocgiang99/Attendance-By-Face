@@ -149,9 +149,8 @@ class RecognitionWidget(QWidget):
         self._list_pic_preview_layout = [None] * 5
 
         for i in range(5):
-            self._list_pic_preview_layout[i] = QLabel(QWidget())
+            self._list_pic_preview_layout[i] = QLabel(self.preview_layout.parentWidget())
             self.preview_layout.addWidget(self._list_pic_preview_layout[i])
-            print("append pic", i, self._list_pic_preview_layout[i])
     
     def setup_show_table_info(self, table_widget):
         self._show_table_info = True
@@ -162,8 +161,11 @@ class RecognitionWidget(QWidget):
         if len(faces) > 0:
             print(faces[0].keys())
         if len(faces) > 5:
-            faces.sort(descending=True, key=lambda x: x['det_score'])
+            faces.sort(reverse=True, key=lambda x: x['det_score'])
             faces = faces[:5]
+
+        for i in range(5):
+            self._list_pic_preview_layout[i].clear()
 
         for i, face in enumerate(faces):
             box = face.bbox.astype(np.int)
@@ -174,11 +176,13 @@ class RecognitionWidget(QWidget):
             h = box[3] - y
 
             cropped_img = cv_img[y:y+h, x:x+w]
-            print(type(cropped_img))
             
-            print("pic ", i)
             pic = self._list_pic_preview_layout[i]
-            pixmap = self.convert_cv_qt(cropped_img)
+
+            size = (128, 128)
+            cropped_img = cv2.resize(cropped_img, size, interpolation=cv2.INTER_CUBIC)
+
+            pixmap = self.convert_cv_qt(cropped_img, keep_shape=True)
             pic.setPixmap(pixmap)
 
             
@@ -202,11 +206,14 @@ class RecognitionWidget(QWidget):
         qt_img = self.convert_cv_qt(cv_img)
         self.image_label.setPixmap(qt_img)
     
-    def convert_cv_qt(self, cv_img):
+    def convert_cv_qt(self, cv_img, keep_shape=False):
         """Convert from an opencv image to QPixmap"""
         rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
         h, w, ch = rgb_image.shape
         bytes_per_line = ch * w
         convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-        p = convert_to_Qt_format.scaled(self.display_width, self.display_height, Qt.KeepAspectRatio)
+        if keep_shape:
+            p = convert_to_Qt_format.scaled(w, h, Qt.KeepAspectRatio)
+        else:
+            p = convert_to_Qt_format.scaled(self.display_width, self.display_height, Qt.KeepAspectRatio)
         return QPixmap.fromImage(p)
