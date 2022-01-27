@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminWidget</class>
+ <widget class="QWidget" name="AdminWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1366</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>580</y>
+     <width>1321</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="utilities_button">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMaximumSize</enum>
+    </property>
+    <property name="horizontalSpacing">
+     <number>1</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>3</number>
+    </property>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="view_attendance_history_button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Xem lịch sử điểm danh</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="2">
+     <widget class="QPushButton" name="update_face_id_button">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Thêm sinh viên</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QPushButton" name="attendance_button">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Điểm danh</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QTableWidget" name="user_info_table">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>140</y>
+     <width>351</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>250</number>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>Tên sinh viên:</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Email:</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string/>
+    </property>
+   </column>
+   <item row="0" column="0">
+    <property name="text">
+     <string>Trương Ngọc Giang</string>
+    </property>
+   </item>
+   <item row="1" column="0">
+    <property name="text">
+     <string>giangtn.170067@sis.hust.edu.vn</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="user_info_table_tittle">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>70</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Thông tin quản trị viên</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
