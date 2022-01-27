@@ -43,7 +43,7 @@ class Ui_MainWindow_Show(Ui_MainWindow):
             return None
 
         # Check type of user
-        user_type = 2
+        user_type = user_info['role']
 
         # Move to alternative widget with user type 
         if (user_type == 0):

@@ -25,17 +25,43 @@ class MySQLConnector(metaclass=SingletonMeta):
 
     def get_user_info(self, username, password):
         cursor = self.db.cursor()
-        query = 'select * from Student where email = %s and pwd = %s'
+        user = {}
 
+
+        query = 'select * from Admin where email = %s and pwd = %s'
+        cursor.execute(query, (username, password))
+
+        for row in cursor:
+            user['name'] = row[0]
+            user['username'] = row[1]
+            user['password'] = row[2]
+            user['role'] = 2
+        
+        if user != {}:
+            return user
+
+        query = 'select * from Teacher where email = %s and pwd = %s'
+        cursor.execute(query, (username, password))
+
+        for row in cursor:
+            user['name'] = row[0]
+            user['username'] = row[1]
+            user['password'] = row[2]
+            user['role'] = 1
+        
+        if user != {}:
+            return user
+
+        query = 'select * from Student where email = %s and pwd = %s'
         cursor.execute(query, (username, password))
         
-        user = {}
         for row in cursor:
-            print(row)
             user['mssv'] = row[0]
             user['name'] = row[1]
             user['username'] = row[2]
             user['password'] = row[3]
+            user['role'] = 0
+
         print(user)
         cursor.close()
         if user == {}:
