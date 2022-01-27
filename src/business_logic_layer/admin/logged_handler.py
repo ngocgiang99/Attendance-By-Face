@@ -7,12 +7,12 @@ from ui.admin.admin import Ui_AdminWidget
 import cv2
 
 class Ui_AdminWidget_Logged(Ui_AdminWidget):
-    def __init__(self, logic_controller, teacher_info):
+    def __init__(self, logic_controller, admin_info):
         super(Ui_AdminWidget, self).__init__()
         self.logic_controller = logic_controller
 
         # Object take from database
-        self.teacher_info = teacher_info
+        self.admin_info = admin_info
     
     def setupUi(self, widget):
         self.main_widget = widget
@@ -24,24 +24,28 @@ class Ui_AdminWidget_Logged(Ui_AdminWidget):
         
 
     def setup_table_info(self):
-        student_name = self.teacher_info.get('name', "error")
-        email = self.teacher_info.get('email', 'error@')
+        user_name = self.admin_info.get('name', "error")
+        email = self.admin_info.get('email', 'error@')
 
 
 
         self.user_info_table.setSortingEnabled(False)
         ___qtablewidgetitem3 = self.user_info_table.item(0, 0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("AdminWidget", student_name, None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("AdminWidget", user_name, None));
         ___qtablewidgetitem5 = self.user_info_table.item(1, 0)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("AdminWidget", email, None));
         pass
 
     def setup_button_click(self):
-        self.update_face_id_button.hide()
+        self.attendance_button.hide()
+        self.add_student_button.clicked.connect(self.pop_up_student_form)
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
 
 
     def view_history_attendace(self):
         self.logic_controller.show_history_widget()
 
+    def pop_up_student_form(self):
+        
+        pass
         

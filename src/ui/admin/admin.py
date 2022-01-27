@@ -44,17 +44,17 @@ class Ui_AdminWidget(object):
 
         self.utilities_button.addWidget(self.view_attendance_history_button, 0, 2, 1, 1)
 
-        self.update_face_id_button = QPushButton(self.gridLayoutWidget)
-        self.update_face_id_button.setObjectName(u"update_face_id_button")
-        self.update_face_id_button.setEnabled(True)
+        self.add_student_button = QPushButton(self.gridLayoutWidget)
+        self.add_student_button.setObjectName(u"add_student_button")
+        self.add_student_button.setEnabled(True)
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.update_face_id_button.sizePolicy().hasHeightForWidth())
-        self.update_face_id_button.setSizePolicy(sizePolicy1)
-        self.update_face_id_button.setCheckable(True)
+        sizePolicy1.setHeightForWidth(self.add_student_button.sizePolicy().hasHeightForWidth())
+        self.add_student_button.setSizePolicy(sizePolicy1)
+        self.add_student_button.setCheckable(True)
 
-        self.utilities_button.addWidget(self.update_face_id_button, 0, 0, 2, 1)
+        self.utilities_button.addWidget(self.add_student_button, 0, 0, 2, 1)
 
         self.attendance_button = QPushButton(self.gridLayoutWidget)
         self.attendance_button.setObjectName(u"attendance_button")
@@ -100,7 +100,7 @@ class Ui_AdminWidget(object):
     def retranslateUi(self, AdminWidget):
         AdminWidget.setWindowTitle(QCoreApplication.translate("AdminWidget", u"Form", None))
         self.view_attendance_history_button.setText(QCoreApplication.translate("AdminWidget", u"Xem l\u1ecbch s\u1eed \u0111i\u1ec3m danh", None))
-        self.update_face_id_button.setText(QCoreApplication.translate("AdminWidget", u"Th\u00eam sinh vi\u00ean", None))
+        self.add_student_button.setText(QCoreApplication.translate("AdminWidget", u"Th\u00eam sinh vi\u00ean", None))
         self.attendance_button.setText(QCoreApplication.translate("AdminWidget", u"\u0110i\u1ec3m danh", None))
         ___qtablewidgetitem = self.user_info_table.verticalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("AdminWidget", u"T\u00ean sinh vi\u00ean:", None));
