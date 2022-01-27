@@ -4,6 +4,7 @@ import random
 
 from business_logic_layer.student.student_logic import StudentLogic
 from business_logic_layer.teacher.teacher_handler import TeacherHandler
+from business_logic_layer.admin.admin_handler import AdminHandler
 from business_logic_layer.database_connector.mysql_connector import MySQLConnector
 class Ui_MainWindow_Show(Ui_MainWindow):
     def __init__(self):
@@ -42,7 +43,7 @@ class Ui_MainWindow_Show(Ui_MainWindow):
             return None
 
         # Check type of user
-        user_type = 1
+        user_type = 2
 
         # Move to alternative widget with user type 
         if (user_type == 0):
@@ -56,6 +57,8 @@ class Ui_MainWindow_Show(Ui_MainWindow):
             pass
         else:
             # Adminstration user
+            self.admin_widget = AdminHandler(self.main_window, user_info)
+            self.admin_widget.show_logged_widget()
             pass
         # self.centralwidget = widget
         # self.main_window.setCentralWidget(widget)
