@@ -26,6 +26,11 @@ create table Teacher (
 
 insert into Student values 
 	(123, 'test', 'test', ''),
+    (1, 'test1', 'test', ''),
+    (2, 'test2', 'test', ''),
+    (3, 'test3', 'test', ''),
+    (4, 'test4', 'test', ''),
+    (5, 'test5', 'test', ''),
 	(20170067, N'Trương Ngọc Giang', 'giangtn.170067@sis.hust.edu.vn', '123456'),
     (20170068, N'Trương Quang Khánh', 'khanhtq.170068@sis.hust.edu.vn', '123456'),
     (20170069, N'Trần Minh Hiếu', 'hieutm.170069@sis.hust.edu.vn', '123456'),
