@@ -140,3 +140,13 @@ class MySQLConnector(metaclass=SingletonMeta):
         cursor.close()
         return res
 
+    def insert_new_student(self, email, mssv, student_name, pwd):
+        cursor = self.db.cursor()
+
+        query = """insert into Student values (%s, %s, %s, %s);"""
+        val = (str(mssv), student_name, email, pwd)
+        cursor.execute(query, val)
+
+        self.db.commit()
+        print(cursor.rowcount, "record inserted.")
+        cursor.close()

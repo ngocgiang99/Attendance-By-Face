@@ -1,8 +1,11 @@
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtCore import QCoreApplication
+from PySide6.QtWidgets import  QDialog
 import random
 
 from ui.admin.admin import Ui_AdminWidget
+from business_logic_layer.admin.student_form_handler import StudentForm
+from business_logic_layer.database_connector.mysql_connector import MySQLConnector
 
 import cv2
 
@@ -20,6 +23,7 @@ class Ui_AdminWidget_Logged(Ui_AdminWidget):
         # self.loginButton.clicked.connect(self.login)
         self.setup_table_info()
         self.setup_button_click()
+        self.setup_database()
         print('setup student login')
         
 
@@ -41,11 +45,21 @@ class Ui_AdminWidget_Logged(Ui_AdminWidget):
         self.add_student_button.clicked.connect(self.pop_up_student_form)
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
 
+    def setup_database(self):
+        self.db_connector = MySQLConnector()
 
     def view_history_attendace(self):
         self.logic_controller.show_history_widget()
 
     def pop_up_student_form(self):
-        
+        email, mssv, student_name, status = StudentForm.get_student_info()
+        if status == QDialog.Accepted:
+            print(email, mssv, student_name)
+        else:
+            print('not have any info')
+
+        pwd = '123456'
+        self.db_connector.insert_new_student(email, mssv, student_name, pwd)
+
         pass
         
