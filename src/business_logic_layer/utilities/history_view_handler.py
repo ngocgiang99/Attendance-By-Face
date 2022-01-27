@@ -75,7 +75,7 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
 
         for his in histories:
             # time = his[2].strftime("%Y-%m-%d %H:%M:%S")
-            time = his[2].strftime("%H:%M:%S %d-%m-%Y-%m")
+            time = his[2].strftime("%H:%M:%S %d-%m-%Y")
             mssv = int(his[1])
             student_info = connector.get_student_info(mssv)
 
@@ -95,6 +95,36 @@ class AttendaceHistoryViewWidget(Ui_Attendace_History):
         pass
 
     def export_res(self):
+        import os
+        now = datetime.datetime.now()
+        time_str = now.strftime('%d%m%Y_%H%M%S')
+        saved_dir = os.path.join('data','history')
+        if not os.path.exists(saved_dir):
+            os.makedirs(saved_dir)
+
+        csv_path = os.path.join(saved_dir, time_str + '.csv')
+        with open(csv_path, 'w', encoding="utf-8") as f:
+            # f.write(u'MSSV,Tên sinh viên,Email,Thời gian điểm danh')
+            f.write(u'MSSV,Ten sinh vien,Email,Thoi gian')
+            f.write('\n')
+
+            for row in range(self.tableWidget.rowCount()):
+                text = ''
+                for column in range(4):
+                    _item = self.tableWidget.item(row, column)
+                    if _item:
+                        item = _item.text()
+                        if (column == 3):
+                            item = datetime.datetime.strptime(item, "%H:%M:%S %d-%m-%Y")
+                            item = item.strftime("%H:%M:%S")
+                        text += item
+                    text += ','
+                print(text)
+                f.write(text)
+                f.write('\n')
+        
+
+
         pass
 
         
