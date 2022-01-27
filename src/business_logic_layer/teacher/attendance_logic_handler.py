@@ -215,8 +215,12 @@ class RecognitionWidget(QWidget):
 
         print(mssv)
         student_info = self.db_connector.get_student_info(mssv)
+        if student_info is None:
+            return
         time = datetime.now()
         student_his = self.db_connector.get_history(mssv, time)
+        if student_his is None:
+            return
 
         student_name = student_info['name']
         student_email = student_info['email']
@@ -272,12 +276,12 @@ class RecognitionWidget(QWidget):
         """Updates the image_label with a new opencv image"""
         faces = self.face_detector.get(cv_img)
 
-        for face in faces:
+        print('--------------------------------------------------')
+        for face in faces:  
             emb = [face['embedding']]
             emb = np.array(emb, dtype=np.float32)
             # label = self.matching_model.predict(emb)[0]
             dist, neigh_ind = self.matching_model.kneighbors(emb, 5)
-            print('--------------------------------------------------')
             print(dist, np.mean(dist))
             print(neigh_ind)
             votes = {}
