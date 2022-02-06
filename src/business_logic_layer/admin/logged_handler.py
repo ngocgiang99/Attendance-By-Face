@@ -44,6 +44,7 @@ class Ui_AdminWidget_Logged(Ui_AdminWidget):
         self.attendance_button.hide()
         self.add_student_button.clicked.connect(self.pop_up_student_form)
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
+        self.logout_button.clicked.connect(self.logout)
 
     def setup_database(self):
         self.db_connector = MySQLConnector()
@@ -62,4 +63,6 @@ class Ui_AdminWidget_Logged(Ui_AdminWidget):
         self.db_connector.insert_new_student(email, mssv, student_name, pwd)
 
         pass
-        
+    
+    def logout(self):
+        self.logic_controller.logout()

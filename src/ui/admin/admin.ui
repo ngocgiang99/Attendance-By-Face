@@ -148,6 +148,19 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="logout_button">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>75</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Đăng xuất</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

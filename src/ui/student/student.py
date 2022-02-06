@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'student.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.1
+## Created by: Qt User Interface Compiler version 6.2.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,18 +15,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGridLayout, QHeaderView, QLayout,
-    QLineEdit, QPushButton, QSizePolicy, QTableWidget,
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLayout,
+    QLineEdit, QPushButton, QSizePolicy, QTableWidget, QAbstractItemView,
     QTableWidgetItem, QWidget)
 
 class Ui_StudentWidget(object):
     def setupUi(self, StudentWidget):
         if not StudentWidget.objectName():
             StudentWidget.setObjectName(u"StudentWidget")
-        StudentWidget.resize(1389, 792)
+        StudentWidget.resize(1366, 768)
         self.gridLayoutWidget = QWidget(StudentWidget)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(40, 580, 1321, 131))
+        self.gridLayoutWidget.setGeometry(QRect(20, 580, 1321, 131))
         self.utilities_button = QGridLayout(self.gridLayoutWidget)
         self.utilities_button.setObjectName(u"utilities_button")
         self.utilities_button.setSizeConstraint(QLayout.SetMaximumSize)
@@ -40,18 +40,19 @@ class Ui_StudentWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.view_attendance_history_button.sizePolicy().hasHeightForWidth())
         self.view_attendance_history_button.setSizePolicy(sizePolicy)
+        self.view_attendance_history_button.setCheckable(True)
 
         self.utilities_button.addWidget(self.view_attendance_history_button, 0, 2, 1, 1)
 
         self.update_face_id_button = QPushButton(self.gridLayoutWidget)
         self.update_face_id_button.setObjectName(u"update_face_id_button")
+        self.update_face_id_button.setEnabled(True)
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.update_face_id_button.sizePolicy().hasHeightForWidth())
         self.update_face_id_button.setSizePolicy(sizePolicy1)
         self.update_face_id_button.setCheckable(True)
-        self.update_face_id_button.setAutoDefault(True)
 
         self.utilities_button.addWidget(self.update_face_id_button, 0, 0, 2, 1)
 
@@ -59,6 +60,7 @@ class Ui_StudentWidget(object):
         self.attendance_button.setObjectName(u"attendance_button")
         sizePolicy1.setHeightForWidth(self.attendance_button.sizePolicy().hasHeightForWidth())
         self.attendance_button.setSizePolicy(sizePolicy1)
+        self.attendance_button.setCheckable(True)
 
         self.utilities_button.addWidget(self.attendance_button, 0, 1, 2, 1)
 
@@ -89,11 +91,13 @@ class Ui_StudentWidget(object):
         self.user_info_table_tittle.setObjectName(u"user_info_table_tittle")
         self.user_info_table_tittle.setGeometry(QRect(40, 70, 191, 31))
         font = QFont()
-        font.setFamilies([u"DejaVu Sans"])
         font.setPointSize(12)
         font.setBold(True)
         self.user_info_table_tittle.setFont(font)
         self.user_info_table_tittle.setReadOnly(True)
+        self.logout_button = QPushButton(StudentWidget)
+        self.logout_button.setObjectName(u"logout_button")
+        self.logout_button.setGeometry(QRect(40, 20, 75, 25))
 
         self.retranslateUi(StudentWidget)
 
@@ -123,5 +127,6 @@ class Ui_StudentWidget(object):
         self.user_info_table.setSortingEnabled(__sortingEnabled)
 
         self.user_info_table_tittle.setText(QCoreApplication.translate("StudentWidget", u"Th\u00f4ng Tin sinh vi\u00ean", None))
+        self.logout_button.setText(QCoreApplication.translate("StudentWidget", u"\u0110\u0103ng xu\u1ea5t", None))
     # retranslateUi
 

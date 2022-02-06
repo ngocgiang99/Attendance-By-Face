@@ -5,6 +5,7 @@ import random
 from business_logic_layer.admin.logged_handler import Ui_AdminWidget_Logged
 from business_logic_layer.utilities.history_view_handler import AttendaceHistoryViewWidget
 import cv2
+from business_logic_layer.started_window import started_window_event
 
 
 class AdminHandler(object):
@@ -39,3 +40,9 @@ class AdminHandler(object):
         self.ui_attendance = AttendaceHistoryViewWidget(self, self.teacher_info)
         self.ui_attendance.setupUi(widget)
         self.show_widget(widget)
+
+    def logout(self):
+        # self.main_window.centralwidget.close()
+        self.ui_login = started_window_event.Ui_MainWindow_Show()
+        self.ui_login.setupUi(self.main_window)
+        self.main_window.show()

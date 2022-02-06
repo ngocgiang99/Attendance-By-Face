@@ -8,8 +8,8 @@ import random
 
 from ui.student.student import Ui_StudentWidget
 from business_logic_layer.student.logged_event import Ui_StudentWidget_Logged
-import cv2
-
+# from business_logic_layer.started_window.started_window_event import Ui_MainWindow_Show
+from business_logic_layer.started_window import started_window_event
 
 class StudentLogic(object):
     def __init__(self, MainWindow, student_info):
@@ -51,3 +51,12 @@ class StudentLogic(object):
         self.ui_attendance = StudentHistoryWidget(self, self.student_info)
         self.ui_attendance.setupUi(widget)
         self.show_widget(widget)
+
+    def logout(self):
+        # self.main_window.centralwidget.close()
+        self.ui_login = started_window_event.Ui_MainWindow_Show()
+        self.ui_login.setupUi(self.main_window)
+        self.main_window.show()
+        
+
+        pass

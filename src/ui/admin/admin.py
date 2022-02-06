@@ -91,6 +91,9 @@ class Ui_AdminWidget(object):
         font.setBold(True)
         self.user_info_table_tittle.setFont(font)
         self.user_info_table_tittle.setReadOnly(True)
+        self.logout_button = QPushButton(AdminWidget)
+        self.logout_button.setObjectName(u"logout_button")
+        self.logout_button.setGeometry(QRect(40, 20, 75, 25))
 
         self.retranslateUi(AdminWidget)
 
@@ -116,5 +119,6 @@ class Ui_AdminWidget(object):
         self.user_info_table.setSortingEnabled(__sortingEnabled)
 
         self.user_info_table_tittle.setText(QCoreApplication.translate("AdminWidget", u"Th\u00f4ng tin qu\u1ea3n tr\u1ecb vi\u00ean", None))
+        self.logout_button.setText(QCoreApplication.translate("AdminWidget", u"\u0110\u0103ng xu\u1ea5t", None))
     # retranslateUi
 

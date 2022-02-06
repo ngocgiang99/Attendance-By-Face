@@ -47,6 +47,7 @@ class Ui_StudentWidget_Logged(Ui_StudentWidget):
         # self.attendance_button.clicked.connect(self.take_attendace)
         self.attendance_button.hide()
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
+        self.logout_button.clicked.connect(self.logout)
 
     def update_face_id(self):
         self.logic_controller.show_updater_widget()
@@ -59,4 +60,5 @@ class Ui_StudentWidget_Logged(Ui_StudentWidget):
     def view_history_attendace(self):
         self.logic_controller.show_history_widget()
 
-        
+    def logout(self):
+        self.logic_controller.logout()
