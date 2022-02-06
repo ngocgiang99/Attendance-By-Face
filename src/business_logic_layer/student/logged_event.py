@@ -44,7 +44,8 @@ class Ui_StudentWidget_Logged(Ui_StudentWidget):
 
     def setup_button_click(self):
         self.update_face_id_button.clicked.connect(self.update_face_id)
-        self.attendance_button.clicked.connect(self.take_attendace)
+        # self.attendance_button.clicked.connect(self.take_attendace)
+        self.attendance_button.hide()
         self.view_attendance_history_button.clicked.connect(self.view_history_attendace)
 
     def update_face_id(self):
