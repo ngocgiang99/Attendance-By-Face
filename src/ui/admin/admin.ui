@@ -102,7 +102,7 @@
    </attribute>
    <row>
     <property name="text">
-     <string>Tên sinh viên:</string>
+     <string>Tên quản trị viên:</string>
     </property>
    </row>
    <row>
