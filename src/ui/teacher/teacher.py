@@ -91,6 +91,9 @@ class Ui_TeacherWidget(object):
         font.setBold(True)
         self.user_info_table_tittle.setFont(font)
         self.user_info_table_tittle.setReadOnly(True)
+        self.logout_button = QPushButton(TeacherWidget)
+        self.logout_button.setObjectName(u"logout_button")
+        self.logout_button.setGeometry(QRect(40, 20, 75, 25))
 
         self.retranslateUi(TeacherWidget)
 
@@ -116,5 +119,6 @@ class Ui_TeacherWidget(object):
         self.user_info_table.setSortingEnabled(__sortingEnabled)
 
         self.user_info_table_tittle.setText(QCoreApplication.translate("TeacherWidget", u"Th\u00f4ng Tin Gi\u1ea3ng Vi\u00ean", None))
+        self.logout_button.setText(QCoreApplication.translate("TeacherWidget", u"\u0110\u0103ng xu\u1ea5t", None))
     # retranslateUi
 
