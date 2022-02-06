@@ -137,7 +137,7 @@
      <x>0</x>
      <y>0</y>
      <width>1367</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout_me">
@@ -152,12 +152,12 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionT_c_gi_Tr_ng_Ng_c_Giang">
    <property name="text">
-    <string>Tác giả: Trương Ngọc Giang</string>
+    <string>Tên: Trương Ngọc Giang</string>
    </property>
   </action>
   <action name="actionemail_truongngocgiang99_gmail_com">
    <property name="text">
-    <string>email: truongngocgiang99@gmail.com</string>
+    <string>Email: truongngocgiang99@gmail.com</string>
    </property>
   </action>
  </widget>

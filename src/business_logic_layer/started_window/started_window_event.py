@@ -14,7 +14,8 @@ class Ui_MainWindow_Show(Ui_MainWindow):
         self.main_window = MainWindow
         super().setupUi(MainWindow)
         self.loginButton.clicked.connect(self.login)
-        self.main_window.setWindowTitle('Login')
+        self.main_window.setWindowTitle('Phần Mềm Điểm Danh Bằng Khuôn Mặt')
+        self.menuAbout_me.setTitle(QtCore.QCoreApplication.translate("MainWindow", u"Tác giả", None))
         self.connect_database()
 
     def connect_database(self):
