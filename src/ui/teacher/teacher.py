@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLayout, QAbstractItemView,
-    QLineEdit, QPushButton, QSizePolicy, QTableWidget,
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLayout,
+    QLineEdit, QPushButton, QSizePolicy, QTableWidget, QAbstractItemView,
     QTableWidgetItem, QWidget)
 
 class Ui_TeacherWidget(object):
@@ -103,7 +103,7 @@ class Ui_TeacherWidget(object):
         self.update_face_id_button.setText(QCoreApplication.translate("TeacherWidget", u"C\u1eadp nh\u1eadt khu\u00f4n m\u1eb7t", None))
         self.attendance_button.setText(QCoreApplication.translate("TeacherWidget", u"\u0110i\u1ec3m danh", None))
         ___qtablewidgetitem = self.user_info_table.verticalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("TeacherWidget", u"T\u00ean sinh vi\u00ean:", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("TeacherWidget", u"T\u00ean gi\u1ea3ng vi\u00ean:", None));
         ___qtablewidgetitem1 = self.user_info_table.verticalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("TeacherWidget", u"Email:", None));
 
@@ -115,6 +115,6 @@ class Ui_TeacherWidget(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("TeacherWidget", u"giangtn.170067@sis.hust.edu.vn", None));
         self.user_info_table.setSortingEnabled(__sortingEnabled)
 
-        self.user_info_table_tittle.setText(QCoreApplication.translate("TeacherWidget", u"Th\u00f4ng Tin sinh vi\u00ean", None))
+        self.user_info_table_tittle.setText(QCoreApplication.translate("TeacherWidget", u"Th\u00f4ng Tin Gi\u1ea3ng Vi\u00ean", None))
     # retranslateUi
 
