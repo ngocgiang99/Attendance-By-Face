@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main.ui'
+## Form generated from reading UI file 'started_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.1
+## Created by: Qt User Interface Compiler version 6.2.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -70,7 +70,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1367, 19))
+        self.menubar.setGeometry(QRect(0, 0, 1367, 22))
         self.menuAbout_me = QMenu(self.menubar)
         self.menuAbout_me.setObjectName(u"menuAbout_me")
         MainWindow.setMenuBar(self.menubar)
@@ -92,8 +92,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.actionT_c_gi_Tr_ng_Ng_c_Giang.setText(QCoreApplication.translate("MainWindow", u"T\u00e1c gi\u1ea3: Tr\u01b0\u01a1ng Ng\u1ecdc Giang", None))
-        self.actionemail_truongngocgiang99_gmail_com.setText(QCoreApplication.translate("MainWindow", u"email: truongngocgiang99@gmail.com", None))
+        self.actionT_c_gi_Tr_ng_Ng_c_Giang.setText(QCoreApplication.translate("MainWindow", u"T\u00ean: Tr\u01b0\u01a1ng Ng\u1ecdc Giang", None))
+        self.actionemail_truongngocgiang99_gmail_com.setText(QCoreApplication.translate("MainWindow", u"Email: truongngocgiang99@gmail.com", None))
 #if QT_CONFIG(whatsthis)
         self.LoginWidget.setWhatsThis(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><br/></p></body></html>", None))
 #endif // QT_CONFIG(whatsthis)

@@ -103,7 +103,7 @@ class Ui_AdminWidget(object):
         self.add_student_button.setText(QCoreApplication.translate("AdminWidget", u"Th\u00eam sinh vi\u00ean", None))
         self.attendance_button.setText(QCoreApplication.translate("AdminWidget", u"\u0110i\u1ec3m danh", None))
         ___qtablewidgetitem = self.user_info_table.verticalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("AdminWidget", u"T\u00ean sinh vi\u00ean:", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("AdminWidget", u"T\u00ean qu\u1ea3n tr\u1ecb vi\u00ean:", None));
         ___qtablewidgetitem1 = self.user_info_table.verticalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("AdminWidget", u"Email:", None));
 

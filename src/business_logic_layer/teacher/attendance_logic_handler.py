@@ -8,6 +8,7 @@ import numpy as np
 
 from ml_services.api.face_recognition.face_recognition_arcface import ArcFaceSingleton
 from business_logic_layer.database_connector.mysql_connector import MySQLConnector
+from business_logic_layer.utilities.similarity_function import COSINE_THRESHOLD
 import threading
 
 # lock_detected_image = threading.Lock()
@@ -152,7 +153,7 @@ class RecognitionWidget(QWidget):
         from sklearn.neighbors import NearestNeighbors, KNeighborsClassifier
         data_dir = 'data/face'
         data = []
-        label = []
+        self.label = []
         cnt = 0
         self.label_name = []
         for root, _, filenames in os.walk(data_dir):
@@ -173,16 +174,16 @@ class RecognitionWidget(QWidget):
                     # print(face.keys())
                     emb = face['embedding']
                     data.append(emb)
-                    label.append(cnt)
+                    self.label.append(cnt)
 
         data = np.array(data, dtype=np.float32)
-        label = np.array(label)
-        n_neighbor = 5
+        self.label = np.array(self.label)
+        n_neighbor = 1
         self.matching_model = KNeighborsClassifier( n_neighbors=n_neighbor,
                                                 metric='cosine',
                                                 algorithm='brute',
                                                 n_jobs=-1)
-        self.matching_model.fit(data, label)
+        self.matching_model.fit(data, self.label)
 
     def _setup_db_connection(self):
         self.db_connector = MySQLConnector()
@@ -212,9 +213,14 @@ class RecognitionWidget(QWidget):
     def insert_to_table_info(self, mssv):
         self.attendance_mssv[mssv] = 1
 
+        print(mssv)
         student_info = self.db_connector.get_student_info(mssv)
+        if student_info is None:
+            return
         time = datetime.now()
         student_his = self.db_connector.get_history(mssv, time)
+        if student_his is None:
+            return
 
         student_name = student_info['name']
         student_email = student_info['email']
@@ -270,10 +276,34 @@ class RecognitionWidget(QWidget):
         """Updates the image_label with a new opencv image"""
         faces = self.face_detector.get(cv_img)
 
-        for face in faces:
+        print('--------------------------------------------------')
+        for face in faces:  
             emb = [face['embedding']]
             emb = np.array(emb, dtype=np.float32)
-            label = self.matching_model.predict(emb)[0]
+            # label = self.matching_model.predict(emb)[0]
+            dist, neigh_ind = self.matching_model.kneighbors(emb, 5)
+            print(dist, np.mean(dist))
+            print(neigh_ind)
+            votes = {}
+            dists = {}
+
+            neigh_ind = neigh_ind[0]
+            for i, ind in enumerate(neigh_ind):
+                ind = self.label[ind]
+                if votes.get(ind, None) is None:
+                    votes[ind] = 0
+                    dists[ind] = 0
+                votes[ind] += 1
+                dists[ind] += dist[0][i]
+
+            for k,v in votes.items():
+                dists[k] /= v
+
+            label = min(dists, key=dists.get)
+            print(label)
+            print(dists[label])
+            if dists[label] >= COSINE_THRESHOLD:
+                continue
             l_name = self.label_name[label-1]
             mssv = int(l_name)
 

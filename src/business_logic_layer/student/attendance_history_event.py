@@ -57,11 +57,8 @@ class StudentHistoryWidget(Ui_Attendace_History):
             # time = his[2].strftime("%Y-%m-%d %H:%M:%S")
             time = his[2].strftime("%H:%M:%S %d-%m-%Y-%m")
 
-            rowPosition = self.tableWidget.rowCount()
-            self.tableWidget.insertRow(rowPosition)
-            self.tableWidget.setItem(rowPosition , 0, QTableWidgetItem(mssv))
-            self.tableWidget.setItem(rowPosition , 1, QTableWidgetItem(student_name))
-            self.tableWidget.setItem(rowPosition , 2, QTableWidgetItem(student_email))
-            self.tableWidget.setItem(rowPosition , 3, QTableWidgetItem(time_attend))
+            item = QtGui.QStandardItem(time)
+            item.setFont(font)
+            model.appendRow(item)
 
         pass
